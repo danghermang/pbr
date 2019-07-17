@@ -1,0 +1,70 @@
+(deffacts lexicon 
+        (lex S)
+        (lex X)
+        (lex Y)
+        (lex A)
+        (lex B)
+        (lex a1)
+        (lex a2)
+        (lex b1)
+        (lex b2)
+        (start)
+)
+(defrule initialize
+        (start)
+        =>
+        (printout t "Introduceti sirul de parsat"crlf)
+        (assert (initial (explode$ (readline)) 0))
+)
+(defrule check_parsable (declare(salience 100))
+        ?s<-(initial $?a ?b $?c ?n) 
+        (not (exists (lex ?b)))
+        =>
+        (retract ?s)
+        (assert (unparseable $?a ?b $?c ?n))
+)
+(defrule rule1 (declare(salience 50))
+        ?s<-(initial $?a S $?b ?n) 
+        =>
+        (assert (initial $?a X Y $?b (+ ?n 1)))
+)
+(defrule rule2 (declare(salience 50))
+        ?s<-(initial $?a X $?b ?n) 
+        =>
+        (assert (initial $?a A $?b (+ ?n 1)))
+)
+(defrule rule3 (declare(salience 50))
+        ?s<-(initial $?a X $?b ?n) 
+        =>
+        (assert (initial $?a A B $?b (+ ?n 1)))
+)
+(defrule rule3 (declare(salience 50))
+        ?s<-(initial $?a Y $?b ?n) 
+        =>
+        (assert (initial $?a A $?b (+ ?n 1)))
+)
+(defrule rule4 (declare(salience 50))
+        ?s<-(initial $?a Y $?b ?n) 
+        =>
+        (assert (initial $?a b1 A $?b (+ ?n 1)))
+)
+(defrule rule5 (declare(salience 50))
+        ?s<-(initial $?a A $?b ?n) 
+        =>
+        (assert (initial $?a a1 $?b (+ ?n 1)))
+)
+(defrule rule6 (declare(salience 50))
+        ?s<-(initial $?a A $?b ?n) 
+        =>
+        (assert (initial $?a a2 $?b (+ ?n 1)))
+)
+(defrule rule7 (declare(salience 50))
+        ?s<-(initial $?a B $?b ?n) 
+        =>
+        (assert (initial $?a b1 $?b (+ ?n 1)))
+)
+(defrule rule8 (declare(salience 50))
+        ?s<-(initial $?a B $?b ?n) 
+        =>
+        (assert (initial $?a b1 $?b (+ ?n 1)))
+)
